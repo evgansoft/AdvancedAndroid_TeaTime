@@ -43,7 +43,7 @@ public class OrderActivityBasicTest {
     public ActivityTestRule<OrderActivity> orderActivityRule
             = new ActivityTestRule<>(OrderActivity.class);
 
-    // TODO (3) Finish writing this test which will:
+    // COMPLETED (3) Finish writing this test which will:
     //          - Check that the initial quantity is zero
     //          - Click on the decrement button
     //          - Verify that the decrement button won't decrease the quantity 0 and cost below $0.00
