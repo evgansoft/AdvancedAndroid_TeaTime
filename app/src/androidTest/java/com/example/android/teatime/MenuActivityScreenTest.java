@@ -26,9 +26,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.anything;
 
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +52,8 @@ public class MenuActivityScreenTest {
 
     public static final String TEA_NAME = "Green Tea";
 
+    private IdlingResource idlingResource;
+
     /**
      * The ActivityTestRule is a rule provided by Android used for functional testing of a single
      * activity. The activity that will be tested will be launched before each test that's annotated
@@ -57,6 +63,12 @@ public class MenuActivityScreenTest {
      */
     @Rule
     public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+
+    @Before
+    public void beforeTest() {
+        idlingResource = mActivityTestRule.getActivity().getIdlingResource();
+        Espresso.registerIdlingResources(idlingResource);
+    }
 
     /**
      * Clicks on a GridView item and checks it opens up the OrderActivity with the correct details.
@@ -72,6 +84,11 @@ public class MenuActivityScreenTest {
         onView(withId(R.id.tea_name_text_view)).check(matches(withText(TEA_NAME)));
 
 
+    }
+
+    @After
+    public void afterTest() {
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
 }
